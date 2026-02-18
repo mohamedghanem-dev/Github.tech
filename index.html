@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GitMastery — إتقن GitHub بالعربي</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo" onclick="scrollToSection('home')">
+    <div class="logo-mark">GM</div>
+    <span>Git<b>Mastery</b></span>
+  </div>
+  <div class="nav-links">
+    <a onclick="scrollToSection('home')">الرئيسية</a>
+    <a onclick="scrollToSection('sections')">الأقسام</a>
+    <a onclick="scrollToSection('news')">الأخبار</a>
+    <a onclick="scrollToSection('about')">عن المنصة</a>
+  </div>
+  <div class="nav-right">
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    <div id="userChip" class="user-chip hidden"></div>
+    <button class="btn-cta" onclick="openNameModal()">ابدأ الآن</button>
+  </div>
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div id="mobileMenu" class="mobile-menu hidden">
+  <a onclick="scrollToSection('home');toggleMenu()">الرئيسية</a>
+  <a onclick="scrollToSection('sections');toggleMenu()">الأقسام</a>
+  <a onclick="scrollToSection('news');toggleMenu()">الأخبار</a>
+  <a onclick="scrollToSection('about');toggleMenu()">عن المنصة</a>
+</div>
+
+<!-- HERO -->
+<section id="home" class="hero">
+  <div class="hero-particles" id="particles"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-pill">🚀 منصة عربية مجانية 100%</div>
+      <h1>تعلّم <span class="grad-text">GitHub</span><br>وارفع مشاريعك<br>باحتراف</h1>
+      <p>من أول `git init` لحد GitHub Actions — شرح عملي بالعربي مع أمثلة حقيقية وشهادة إتمام</p>
+      <div class="hero-actions">
+        <button class="btn-main" onclick="openNameModal()">ابدأ رحلتك ←</button>
+        <button class="btn-outline" onclick="scrollToSection('sections')">استعرض الأقسام</button>
+      </div>
+      <div class="hero-numbers">
+        <div class="num-item"><span class="num">10</span><span class="lbl">أقسام</span></div>
+        <div class="num-sep"></div>
+        <div class="num-item"><span class="num">+60</span><span class="lbl">مثال كود</span></div>
+        <div class="num-sep"></div>
+        <div class="num-item"><span class="num">🎓</span><span class="lbl">شهادة</span></div>
+      </div>
+    </div>
+    <div class="hero-terminal">
+      <div class="term-bar">
+        <span class="tb red"></span><span class="tb yellow"></span><span class="tb green"></span>
+        <span class="term-title">bash — GitMastery</span>
+      </div>
+      <div class="term-body">
+        <div class="term-line">
+          <span class="t-user">user@gitmastery</span><span class="t-sep">:</span><span class="t-path">~/project</span><span class="t-dollar">$</span>
+          <span id="typedCmd"></span><span class="t-cursor">▋</span>
+        </div>
+        <div id="termOut"></div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll" onclick="scrollToSection('sections')">
+    <span>اكتشف المحتوى</span>
+    <div class="scroll-arrow">↓</div>
+  </div>
+</section>
+
+<!-- PROGRESS -->
+<div id="progressBar" class="progress-wrap hidden">
+  <div class="progress-meta">
+    <span id="progressName">أهلاً!</span>
+    <span id="progressLabel">0 / 10 أقسام</span>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+
+<!-- SECTIONS -->
+<section id="sections" class="learn-section">
+  <div class="sec-head">
+    <div class="sec-tag">المنهج الدراسي</div>
+    <h2>مسار التعلم الكامل</h2>
+    <p>10 أقسام مرتبة بعناية — كل قسم يبني على اللي قبله</p>
+  </div>
+  <div class="cards-grid" id="cardsGrid"></div>
+</section>
+
+<!-- NEWS -->
+<section id="news" class="news-section">
+  <div class="sec-head">
+    <div class="sec-tag">أخبار ومستجدات</div>
+    <h2>GitHub والذكاء الاصطناعي</h2>
+    <p>آخر أخبار عالم التطوير والتقنية</p>
+    <button class="admin-btn" onclick="openAdmin()">⚙️ لوحة الأدمن</button>
+  </div>
+  <div class="news-tabs">
+    <button class="tab active" data-cat="all" onclick="filterNews('all',this)">الكل</button>
+    <button class="tab" data-cat="github" onclick="filterNews('github',this)">GitHub</button>
+    <button class="tab" data-cat="ai" onclick="filterNews('ai',this)">الذكاء الاصطناعي</button>
+    <button class="tab" data-cat="dev" onclick="filterNews('dev',this)">برمجة</button>
+  </div>
+  <div class="news-grid" id="newsGrid"></div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="about-section">
+  <div class="about-grid">
+    <div class="about-text">
+      <div class="sec-tag">عن المنصة</div>
+      <h2>ليه GitMastery؟</h2>
+      <p>لاحظت إن كتير من المطورين العرب بيتعثروا في الخطوات الأولى مع GitHub — مش لأنه صعب، لكن لأن معظم الشروحات إما بالإنجليزي أو مش عملية بما يكفي.</p>
+      <p>فقررت أعمل منصة عربية مجانية 100% بمحتوى عملي حقيقي — من أول `git init` لحد نشر مشاريع Next.js على Vercel.</p>
+      <div class="about-features">
+        <div class="feat"><span>🎯</span><span>تعلم عملي مع أمثلة حقيقية</span></div>
+        <div class="feat"><span>🇪🇬</span><span>شرح بالعربي بالكامل</span></div>
+        <div class="feat"><span>⚡</span><span>محتوى محدّث باستمرار</span></div>
+        <div class="feat"><span>🎓</span><span>شهادة إتمام باسمك</span></div>
+        <div class="feat"><span>💰</span><span>مجاني تماماً — بدون اشتراك</span></div>
+        <div class="feat"><span>📱</span><span>يشتغل على موبايل وكمبيوتر</span></div>
+      </div>
+    </div>
+    <div class="about-card-wrap">
+      <div class="creator-card">
+        <div class="creator-avatar">MG</div>
+        <h3>Mohamed Ghanem</h3>
+        <p>مبرمج مواقع ومؤسس GitMastery</p>
+        <div class="creator-links">
+          <a href="#">GitHub</a>
+          <a href="#">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-logo">Git<b>Mastery</b></div>
+  <p>منصة عربية مجانية لتعلم GitHub من الصفر للاحتراف</p>
+  <p class="footer-copy">© 2025 GitMastery — صُنع بـ ❤️ للمطورين العرب</p>
+</footer>
+
+<!-- MODAL: NAME -->
+<div id="nameModal" class="overlay hidden" onclick="closeIfOverlay(event,'nameModal')">
+  <div class="modal-box">
+    <button class="close-btn" onclick="closeModal('nameModal')">✕</button>
+    <div class="modal-emoji">👋</div>
+    <h2>أهلاً بيك!</h2>
+    <p>اكتب اسمك الكامل عشان نتابع تقدمك ونجهّز شهادتك</p>
+    <input type="text" id="nameInput" placeholder="مثال: Mohamed Ghanem" maxlength="60"
+      onkeydown="if(event.key==='Enter')saveName()"/>
+    <button class="btn-main w100" onclick="saveName()">ابدأ التعلم ←</button>
+  </div>
+</div>
+
+<!-- MODAL: LESSON -->
+<div id="lessonModal" class="overlay hidden" onclick="closeIfOverlay(event,'lessonModal')">
+  <div class="modal-box wide">
+    <button class="close-btn" onclick="closeModal('lessonModal')">✕</button>
+    <div id="lessonBody"></div>
+    <button class="btn-main w100" id="doneBtn" onclick="markDone()">✅ أكملت هذا القسم</button>
+  </div>
+</div>
+
+<!-- MODAL: CERT -->
+<div id="certModal" class="overlay hidden" onclick="closeIfOverlay(event,'certModal')">
+  <div class="modal-box">
+    <button class="close-btn" onclick="closeModal('certModal')">✕</button>
+    <canvas id="certCanvas" width="900" height="600"></canvas>
+    <button class="btn-main w100" onclick="downloadCert()" style="margin-top:16px">⬇️ تحميل الشهادة PNG</button>
+  </div>
+</div>
+
+<!-- MODAL: ADMIN -->
+<div id="adminModal" class="overlay hidden" onclick="closeIfOverlay(event,'adminModal')">
+  <div class="modal-box wide">
+    <button class="close-btn" onclick="closeModal('adminModal')">✕</button>
+    <h2>⚙️ لوحة الأدمن</h2>
+    <div id="adminLoginBox">
+      <p style="color:var(--muted);margin-bottom:12px">أدخل كلمة السر:</p>
+      <input type="password" id="adminPass" placeholder="كلمة السر" onkeydown="if(event.key==='Enter')checkAdmin()"/>
+      <button class="btn-main w100" onclick="checkAdmin()">دخول</button>
+    </div>
+    <div id="adminPanel" class="hidden">
+      <div class="admin-form">
+        <h3>➕ إضافة مقال</h3>
+        <input type="text" id="aTitle" placeholder="عنوان المقال *"/>
+        <input type="text" id="aImg" placeholder="رابط صورة (اختياري)"/>
+        <select id="aCat">
+          <option value="github">🐙 GitHub</option>
+          <option value="ai">🤖 الذكاء الاصطناعي</option>
+          <option value="dev">💻 برمجة</option>
+        </select>
+        <textarea id="aBody" rows="5" placeholder="محتوى المقال *"></textarea>
+        <button class="btn-main w100" onclick="publishArticle()">🚀 نشر المقال</button>
+      </div>
+      <div class="admin-list">
+        <h3>📰 المقالات الحالية</h3>
+        <div id="adminListEl"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
